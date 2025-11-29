@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Admin — AmazeHeads Media</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="logo-row">
+    <div class="logo"><h1>Admin Dashboard</h1></div>
+  </div>
+</header>
+
+<main class="container">
+  <div style="display:flex;gap:10px;align-items:center;margin-bottom:12px">
+    <div>
+      <input id="folderPath" type="text" placeholder="Current folder (root = '')" style="padding:8px;width:320px">
+    </div>
+    <button id="refreshBtn">Refresh</button>
+    <input id="createFolderName" placeholder="New folder name" style="padding:8px">
+    <button id="createFolderBtn">Create Folder</button>
+    <button id="logoutBtn" style="margin-left:auto">Logout</button>
+  </div>
+
+  <section>
+    <div id="dropArea" style="border:2px dashed #bbb;padding:18px;border-radius:8px">
+      <strong>Drag & drop files here</strong>
+      <p>Or <input id="fileInput" type="file" multiple> </p>
+    </div>
+  </section>
+
+  <section style="margin-top:18px">
+    <h3>Files</h3>
+    <div id="fileList"></div>
+  </section>
+</main>
+
+<script src="js/admin.js"></script>
+</body>
+</html>

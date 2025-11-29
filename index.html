@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>AmazeHeads — Gallery</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="logo-row">
+    <div class="logo">
+      <img src="amazeheads.jpeg" alt="AmazeHeads" class="logo-img">
+      <h1>WELCOME TO AMAZEHEADS</h1>
+    </div>
+    <button id="hamburger" class="hamburger" aria-label="menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Canvas animation overlay -->
+<div id="anim-overlay">
+  <canvas id="heroCanvas"></canvas>
+</div>
+
+<!-- Gallery -->
+<main class="container">
+  <h2 class="section-title">Gallery</h2>
+  <div id="gallery" class="gallery-grid">
+    <!-- Images inserted by JS -->
+  </div>
+</main>
+
+<!-- Hamburger menu dropdown -->
+<nav id="menuPanel" class="menu-panel hidden">
+  <ul>
+    <li><button id="openAdmin">Admin Login</button></li>
+    <li><a href="#">About</a></li>
+  </ul>
+</nav>
+
+<!-- Admin login modal (simple) -->
+<div id="loginModal" class="modal hidden">
+  <div class="modal-card">
+    <h3>Admin Login</h3>
+    <input id="adminPass" type="password" placeholder="Admin password" />
+    <div class="modal-actions">
+      <button id="loginBtn">Login</button>
+      <button id="closeLogin">Cancel</button>
+    </div>
+    <div id="loginMsg" class="form-msg"></div>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>
