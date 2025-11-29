@@ -1,56 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Admin — AmazeHeads</title>
-<link rel="stylesheet" href="style.css" />
-</head>
-<body>
-<header class="site-header small">
-  <div class="header-inner">
-    <div class="logo-left"><span class="brand">AmazeHeads Admin</span></div>
-    <nav class="main-nav">
-      <a href="index.html">Home</a>
-      <a href="gallery.html">Gallery</a>
-    </nav>
-  </div>
-</header>
+// PUBLIC GALLERY JS
+const API = "https://amazeheads-api.roboticsclub1610.workers.dev";
 
-<main class="admin-wrap">
-  <section class="panel">
-    <h2>Admin Login</h2>
-    <form id="loginForm">
-      <input id="email" placeholder="Email" required />
-      <input id="password" type="password" placeholder="Password" required />
-      <button type="submit">Login</button>
-    </form>
-    <div id="loginMsg" class="muted"></div>
-  </section>
+async function loadGallery() {
+  try {
+    const res = await fetch(`${API}/api/list`);
+    const files = await res.json();
 
-  <section id="dashboard" class="panel hidden">
-    <h2>Dashboard</h2>
+    const gallery = document.getElementById("gallery");
+    gallery.innerHTML = "";
 
-    <div class="album-row">
-      <input id="albumName" placeholder="New album name" />
-      <button id="createAlbumBtn">Create Album</button>
-    </div>
+    files.forEach(f => {
+      const url = `${API.replace("/api", "")}/${f.filename}`;
 
-    <div class="upload-row">
-      <select id="albumSelect"><option value="">Select album</option></select>
-      <input id="fileInput" type="file" />
-      <button id="uploadBtn">Upload</button>
-    </div>
+      gallery.innerHTML += `
+        <div class="card">
+          <img src="${url}" loading="lazy">
+          <div class="info">${f.filename}</div>
+        </div>`;
+    });
 
-    <h3>Media</h3>
-    <div id="mediaList" class="media-list"></div>
-  </section>
-</main>
+  } catch (err) {
+    console.error(err);
+    document.getElementById("gallery").innerHTML =
+      "<p>Unable to load images</p>";
+  }
+}
 
-<footer class="site-footer">
-  <div>© 2025 AmazeHeads</div>
-</footer>
-
-<script src="admin.js"></script>
-</body>
-</html>
+document.addEventListener("DOMContentLoaded", loadGallery);
