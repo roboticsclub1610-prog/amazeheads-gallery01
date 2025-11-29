@@ -1,42 +1,56 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Admin — AmazeHeads Media</title>
-<link rel="stylesheet" href="css/style.css">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Admin — AmazeHeads</title>
+<link rel="stylesheet" href="style.css" />
 </head>
 <body>
-<header class="topbar">
-  <div class="logo-row">
-    <div class="logo"><h1>Admin Dashboard</h1></div>
+<header class="site-header small">
+  <div class="header-inner">
+    <div class="logo-left"><span class="brand">AmazeHeads Admin</span></div>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="gallery.html">Gallery</a>
+    </nav>
   </div>
 </header>
 
-<main class="container">
-  <div style="display:flex;gap:10px;align-items:center;margin-bottom:12px">
-    <div>
-      <input id="folderPath" type="text" placeholder="Current folder (root = '')" style="padding:8px;width:320px">
-    </div>
-    <button id="refreshBtn">Refresh</button>
-    <input id="createFolderName" placeholder="New folder name" style="padding:8px">
-    <button id="createFolderBtn">Create Folder</button>
-    <button id="logoutBtn" style="margin-left:auto">Logout</button>
-  </div>
-
-  <section>
-    <div id="dropArea" style="border:2px dashed #bbb;padding:18px;border-radius:8px">
-      <strong>Drag & drop files here</strong>
-      <p>Or <input id="fileInput" type="file" multiple> </p>
-    </div>
+<main class="admin-wrap">
+  <section class="panel">
+    <h2>Admin Login</h2>
+    <form id="loginForm">
+      <input id="email" placeholder="Email" required />
+      <input id="password" type="password" placeholder="Password" required />
+      <button type="submit">Login</button>
+    </form>
+    <div id="loginMsg" class="muted"></div>
   </section>
 
-  <section style="margin-top:18px">
-    <h3>Files</h3>
-    <div id="fileList"></div>
+  <section id="dashboard" class="panel hidden">
+    <h2>Dashboard</h2>
+
+    <div class="album-row">
+      <input id="albumName" placeholder="New album name" />
+      <button id="createAlbumBtn">Create Album</button>
+    </div>
+
+    <div class="upload-row">
+      <select id="albumSelect"><option value="">Select album</option></select>
+      <input id="fileInput" type="file" />
+      <button id="uploadBtn">Upload</button>
+    </div>
+
+    <h3>Media</h3>
+    <div id="mediaList" class="media-list"></div>
   </section>
 </main>
 
-<script src="js/admin.js"></script>
+<footer class="site-footer">
+  <div>© 2025 AmazeHeads</div>
+</footer>
+
+<script src="admin.js"></script>
 </body>
 </html>

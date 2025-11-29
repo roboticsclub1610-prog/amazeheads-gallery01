@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>AmazeHeads — Gallery</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header class="site-header small">
+  <div class="header-inner">
+    <div class="logo-left"><span class="brand">MyWebsite</span></div>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="admin.html">Admin</a>
+      <button id="menuBtn2" class="menu-btn">☰</button>
+    </nav>
+  </div>
+</header>
+
+<main class="content-wrap">
+  <section class="gallery-top">
+    <h2>Gallery</h2>
+    <p>Public gallery — feel free to browse the media.</p>
+  </section>
+
+  <section id="gallery" class="gallery-grid">
+    <!-- images injected by JS -->
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div>© 2025 AmazeHeads — Hosted on GitHub Pages</div>
+</footer>
+
+<script src="app.js"></script>
+<script>
+  // toggle side panel reused from index - minimal
+  const panel2 = document.querySelector('#sidePanel');
+  document.getElementById('menuBtn2').addEventListener('click', ()=> panel2.classList.add('open'));
+</script>
+</body>
+</html>
