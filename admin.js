@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // Admin scripts (simple). API endpoints must match your Worker.
 const API_BASE = "https://amazeheads-api.roboticsclub1610.workers.dev"; // <--- change if your worker uses different path
 const loginForm = document.getElementById('loginForm');
@@ -35,6 +36,13 @@ async function openDashboard(){
   loginForm.parentElement.classList.add('hidden');
   dashboard.classList.remove('hidden');
   await loadAlbums();
+=======
+const API_ORIGIN = 'https://amazeheads-api.roboticsclub1610.workers.dev/';
+const pass = localStorage.getItem('amaze_admin_pass');
+if(!pass){
+  alert('Not logged in - redirecting to homepage');
+  window.location.href = '/';
+>>>>>>> a3e02af44a5b71eada5ddc2e6615c1a5169294fe
 }
 
 async function loadAlbums(){
@@ -49,6 +57,7 @@ async function loadAlbums(){
   }
 }
 
+<<<<<<< HEAD
 function populateAlbums(files){
   const select = document.getElementById('albumSelect');
   select.innerHTML = '<option value="">Default</option>';
@@ -83,6 +92,26 @@ function populateAlbums(files){
         loadAlbums();
       }catch(err){ alert('Delete failed'); console.error(err); }
     });
+=======
+function renderList(objects){
+  fileList.innerHTML = '';
+  if(objects.length === 0){ fileList.innerHTML = '<div>No files</div>'; return; }
+  objects.forEach(obj=>{
+    const row = document.createElement('div');
+    row.style.display = 'flex'; row.style.alignItems='center'; row.style.gap = '12px';
+    row.style.padding = '8px'; row.style.borderBottom = '1px solid #eee';
+    const left = document.createElement('div'); left.style.flex='1';
+    left.innerHTML = `<div style="font-weight:600">${obj.key}</div><div style="font-size:12px;color:#666">${obj.size || 0} bytes</div>`;
+    const btnRename = document.createElement('button'); btnRename.textContent='Rename';
+    const btnDelete = document.createElement('button'); btnDelete.textContent='Delete';
+    btnRename.onclick = ()=> {
+      const newn = prompt('New name for: ' + obj.key, obj.key);
+      if(newn) renameObj(obj.key, newn);
+    };
+    btnDelete.onclick = ()=> deleteObj(obj.key);
+    row.appendChild(left); row.appendChild(btnRename); row.appendChild(btnDelete);
+    fileList.appendChild(row);
+>>>>>>> a3e02af44a5b71eada5ddc2e6615c1a5169294fe
   });
 }
 
@@ -112,6 +141,7 @@ document.getElementById('uploadBtn')?.addEventListener('click', async ()=>{
   const albumId = document.getElementById('albumSelect').value;
   if(!fileInput.files.length) return alert('Choose a file');
   const fd = new FormData();
+<<<<<<< HEAD
   fd.append('file', fileInput.files[0]);
   if(albumId) fd.append('albumId', albumId);
   try{
@@ -122,3 +152,44 @@ document.getElementById('uploadBtn')?.addEventListener('click', async ()=>{
     loadAlbums();
   }catch(err){ alert('Upload failed'); console.error(err); }
 });
+=======
+  for(const f of files) fd.append('files', f);
+  fd.append('prefix', prefix || '');
+  const r = await fetch(API_ORIGIN + '/api/upload', {
+    method:'POST',
+    headers: { 'x-admin-password': pass },
+    body: fd
+  });
+  const j = await r.json().catch(()=>({}));
+  await list(prefix);
+  alert(j.message || 'Uploaded');
+}
+
+createFolderBtn.addEventListener('click', async()=>{
+  const name = createFolderName.value.trim();
+  if(!name) return alert('enter name');
+  const prefix = (folderPathInput.value || '').trim();
+  await fetch(API_ORIGIN + '/api/create-folder', {
+    method:'POST',
+    headers:{ 'content-type':'application/json','x-admin-password': pass},
+    body: JSON.stringify({ prefix, folderName: name })
+  });
+  createFolderName.value='';
+  list(folderPathInput.value);
+});
+
+fileInput.addEventListener('change', ()=> uploadFiles(fileInput.files, folderPathInput.value));
+dropArea.addEventListener('dragover', e=>{ e.preventDefault(); dropArea.style.background='#f7faff'; });
+dropArea.addEventListener('dragleave', ()=>{ dropArea.style.background='transparent'; });
+dropArea.addEventListener('drop', e=>{
+  e.preventDefault();
+  dropArea.style.background='transparent';
+  const files = [...e.dataTransfer.files];
+  uploadFiles(files, folderPathInput.value);
+});
+
+refreshBtn.addEventListener('click', ()=> list(folderPathInput.value));
+logoutBtn.addEventListener('click', ()=> { localStorage.removeItem('amaze_admin_pass'); window.location.href = '/'; });
+
+list('');
+>>>>>>> a3e02af44a5b71eada5ddc2e6615c1a5169294fe
