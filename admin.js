@@ -1,5 +1,4 @@
-// Admin script
-const API_ORIGIN = 'https://YOUR_WORKER_DOMAIN_OR_SUBDOMAIN'; // same as main.js
+const API_ORIGIN = 'https://YOUR_WORKER_URL';
 const pass = localStorage.getItem('amaze_admin_pass');
 if(!pass){
   alert('Not logged in - redirecting to homepage');
@@ -35,16 +34,16 @@ function renderList(objects){
     const row = document.createElement('div');
     row.style.display = 'flex'; row.style.alignItems='center'; row.style.gap = '12px';
     row.style.padding = '8px'; row.style.borderBottom = '1px solid #eee';
-    const name = document.createElement('div'); name.style.flex='1'; name.textContent = obj.key;
-    const size = document.createElement('div'); size.textContent = (obj.size || 0) + ' bytes';
-    const btnDelete = document.createElement('button'); btnDelete.textContent='Delete';
+    const left = document.createElement('div'); left.style.flex='1';
+    left.innerHTML = `<div style="font-weight:600">${obj.key}</div><div style="font-size:12px;color:#666">${obj.size || 0} bytes</div>`;
     const btnRename = document.createElement('button'); btnRename.textContent='Rename';
-    btnDelete.onclick = ()=> deleteObj(obj.key);
+    const btnDelete = document.createElement('button'); btnDelete.textContent='Delete';
     btnRename.onclick = ()=> {
       const newn = prompt('New name for: ' + obj.key, obj.key);
       if(newn) renameObj(obj.key, newn);
     };
-    row.appendChild(name); row.appendChild(size); row.appendChild(btnRename); row.appendChild(btnDelete);
+    btnDelete.onclick = ()=> deleteObj(obj.key);
+    row.appendChild(left); row.appendChild(btnRename); row.appendChild(btnDelete);
     fileList.appendChild(row);
   });
 }
@@ -77,12 +76,11 @@ async function uploadFiles(files, prefix){
     headers: { 'x-admin-password': pass },
     body: fd
   });
-  const j = await r.json();
+  const j = await r.json().catch(()=>({}));
   await list(prefix);
   alert(j.message || 'Uploaded');
 }
 
-// create folder: we create a zero-byte "folder marker" key ending with '/'
 createFolderBtn.addEventListener('click', async()=>{
   const name = createFolderName.value.trim();
   if(!name) return alert('enter name');
@@ -109,5 +107,4 @@ dropArea.addEventListener('drop', e=>{
 refreshBtn.addEventListener('click', ()=> list(folderPathInput.value));
 logoutBtn.addEventListener('click', ()=> { localStorage.removeItem('amaze_admin_pass'); window.location.href = '/'; });
 
-// initial list
 list('');
