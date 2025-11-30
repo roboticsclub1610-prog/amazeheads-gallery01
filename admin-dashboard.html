@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Dashboard</title>
+<link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+<h1>Media Manager</h1>
+
+<div class="controls">
+    <input type="text" id="folderName" placeholder="Folder Name">
+    <button onclick="createFolder()">Create Folder</button>
+
+    <input type="file" id="fileUpload">
+    <button onclick="uploadFile()">Upload File</button>
+</div>
+
+<div id="output"></div>
+
+<script>
+const API = "https://amazeheads-api.roboticsclub1610.workers.dev";
+
+async function createFolder(){
+    let name = document.getElementById("folderName").value;
+    if(!name) return alert("Enter folder name");
+
+    await fetch(`${API}/create-folder/${name}`);
+    alert("Folder Created!");
+}
+
+async function uploadFile(){
+    let file = document.getElementById("fileUpload").files[0];
+    if(!file) return alert("Select a file");
+
+    let form = new FormData();
+    form.append("file", file);
+
+    await fetch(`${API}/upload/${file.name}`, {
+        method: "POST",
+        body: form
+    });
+
+    alert("File Uploaded!");
+}
+
+async function listMedia(){
+    let res = await fetch(`${API}/list`);
+    let data = await res.json();
+
+    let html = "<h2>Files:</h2>";
+    data.forEach(f => {
+        html += `<div>${f} 
+            <button onclick="deleteFile('${f}')">Delete</button>
+        </div>`;
+    });
+
+    document.getElementById("output").innerHTML = html;
+}
+
+async function deleteFile(name){
+    await fetch(`${API}/delete/${name}`);
+    alert("Deleted!");
+    listMedia();
+}
+
+listMedia();
+</script>
+
+</body>
+</html>
