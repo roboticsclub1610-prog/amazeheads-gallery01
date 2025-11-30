@@ -1,84 +1,65 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>AmazeHeads — Welcome</title>
+<title>AmazeHeads — Intro</title>
 <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-
-<!-- ANIMATION OVERLAY -->
-<div id="splash" class="welcome-container">
-  <div class="logo-row">
-    <div class="star">★</div>
-    <div class="line-container">
-      <div class="line left"></div>
-      <div class="line right"></div>
-    </div>
+<body class="intro-body">
+  <div id="intro" class="intro-center" aria-hidden="false">
+    <svg id="logoSVG" width="520" height="220" viewBox="0 0 520 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AmazeHeads logo animation">
+      <line id="lineL" x1="40" y1="80" x2="220" y2="80" stroke="#c68a3c" stroke-width="4" stroke-linecap="round" />
+      <line id="lineR" x1="300" y1="80" x2="480" y2="80" stroke="#c68a3c" stroke-width="4" stroke-linecap="round" />
+      <g id="starGroup" transform="translate(260,30) scale(0)">
+        <polygon id="star" points="0,-24 6,-8 24,-8 9,2 14,18 0,8 -14,18 -9,2 -24,-8 -6,-8" fill="#d4a24b" />
+      </g>
+      <g id="titleGroup" transform="translate(260,110)">
+        <text id="titleStroke" x="0" y="0" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="40" fill="none" stroke="#b36a40" stroke-width="0.6" opacity="0">AmazeHeads</text>
+        <text id="titleFill" x="0" y="0" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="40" fill="#b36a40" opacity="0">AmazeHeads</text>
+        <text id="subtitle" x="0" y="36" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#b36a40" opacity="0">INSPIRING YOUNG MINDS</text>
+      </g>
+    </svg>
   </div>
-  <div class="title">AmazeHeads</div>
-  <div class="subtitle">INSPIRING YOUNG MINDS</div>
-</div>
 
-<!-- MAIN SITE -->
-<header class="site-header">
-  <div class="header-inner">
-    <div class="logo-left">
-      <img src="" alt="" class="mini-robot" />
-      <span class="brand">WELCOME TO AMAZEHEADS</span>
-    </div>
-
-    <nav class="main-nav">
-      <a href="index.html">Home</a>
-      <a href="gallery.html">Gallery</a>
-      <a href="#">Events</a>
-      <a href="#">Contact</a>
-      <button id="menuBtn" class="menu-btn">Menu ▾</button>
-    </nav>
-  </div>
-</header>
-
-<!-- Hidden side panel -->
-<aside id="sidePanel" class="side-panel">
-  <button id="closePanel" class="close-btn">×</button>
-  <h3>Menu</h3>
-  <ul>
-    <li><a href="index.html">Home</a></li>
-    <li><a href="gallery.html">Gallery</a></li>
-    <li><a href="admin.html">Admin</a></li>
-    <li><a href="#">Contact</a></li>
-  </ul>
-
-  <hr />
-  <div class="login-short">
-    <a href="admin.html" class="admin-btn">Admin Login</a>
-  </div>
-</aside>
-
-<main class="hero">
-  <div class="hero-inner">
-    <h1>Welcome to AmazeHeads</h1>
-    <p class="lead">Inspiring young minds every day.</p>
-    <a class="cta" href="gallery.html">Explore the Gallery</a>
-  </div>
-</main>
-
-<footer class="site-footer">
-  <div>© 2025 AmazeHeads — Hosted on GitHub Pages</div>
-</footer>
-
-<script src="app.js"></script>
 <script>
-  // splash animation hide after 6.5s
-  setTimeout(()=> {
-    document.getElementById('splash').style.display = 'none';
-  }, 6500);
+(function () {
+  const lineL = document.getElementById('lineL');
+  const lineR = document.getElementById('lineR');
+  const starGroup = document.getElementById('starGroup');
+  const titleStroke = document.getElementById('titleStroke');
+  const titleFill = document.getElementById('titleFill');
+  const subtitle = document.getElementById('subtitle');
 
-  // side panel toggles
-  const panel = document.getElementById('sidePanel');
-  document.getElementById('menuBtn').addEventListener('click', ()=> panel.classList.add('open'));
-  document.getElementById('closePanel').addEventListener('click', ()=> panel.classList.remove('open'));
+  function prepareLine(line) {
+    const len = line.getTotalLength ? line.getTotalLength() : 200;
+    line.style.strokeDasharray = len;
+    line.style.strokeDashoffset = len;
+    line.style.transition = 'stroke-dashoffset 0.6s ease-out, opacity 0.4s ease-out';
+    line.style.opacity = '0';
+  }
+
+  prepareLine(lineL);
+  prepareLine(lineR);
+
+  setTimeout(() => {
+    lineL.style.opacity = '1';
+    lineL.style.strokeDashoffset = '0';
+    lineR.style.opacity = '1';
+    lineR.style.strokeDashoffset = '0';
+  }, 150);
+
+  setTimeout(() => {
+    starGroup.style.transition = 'transform 450ms cubic-bezier(.2,.9,.3,1)';
+    starGroup.style.transform = 'translate(260px,30px) scale(1)';
+  }, 800);
+
+  setTimeout(() => { titleStroke.style.transition = 'opacity 300ms ease-out'; titleStroke.style.opacity = '1'; }, 1300);
+  setTimeout(() => { titleFill.style.transition = 'opacity 300ms ease-out'; titleFill.style.opacity = '1'; }, 1600);
+  setTimeout(() => { subtitle.style.transition = 'opacity 400ms ease-out'; subtitle.style.opacity = '1'; }, 1800);
+
+  setTimeout(() => { window.location.href = 'home.html'; }, 3000);
+})();
 </script>
 </body>
 </html>
