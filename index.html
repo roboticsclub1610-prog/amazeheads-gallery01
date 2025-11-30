@@ -1,65 +1,26 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>AmazeHeads — Intro</title>
-<link rel="stylesheet" href="style.css" />
-</head>
-<body class="intro-body">
-  <div id="intro" class="intro-center" aria-hidden="false">
-    <svg id="logoSVG" width="520" height="220" viewBox="0 0 520 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AmazeHeads logo animation">
-      <line id="lineL" x1="40" y1="80" x2="220" y2="80" stroke="#c68a3c" stroke-width="4" stroke-linecap="round" />
-      <line id="lineR" x1="300" y1="80" x2="480" y2="80" stroke="#c68a3c" stroke-width="4" stroke-linecap="round" />
-      <g id="starGroup" transform="translate(260,30) scale(0)">
-        <polygon id="star" points="0,-24 6,-8 24,-8 9,2 14,18 0,8 -14,18 -9,2 -24,-8 -6,-8" fill="#d4a24b" />
-      </g>
-      <g id="titleGroup" transform="translate(260,110)">
-        <text id="titleStroke" x="0" y="0" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="40" fill="none" stroke="#b36a40" stroke-width="0.6" opacity="0">AmazeHeads</text>
-        <text id="titleFill" x="0" y="0" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="40" fill="#b36a40" opacity="0">AmazeHeads</text>
-        <text id="subtitle" x="0" y="36" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#b36a40" opacity="0">INSPIRING YOUNG MINDS</text>
-      </g>
-    </svg>
-  </div>
-
+<meta charset="UTF-8">
+<title>AmazeHeads</title>
+<link rel="stylesheet" href="style.css">
 <script>
-(function () {
-  const lineL = document.getElementById('lineL');
-  const lineR = document.getElementById('lineR');
-  const starGroup = document.getElementById('starGroup');
-  const titleStroke = document.getElementById('titleStroke');
-  const titleFill = document.getElementById('titleFill');
-  const subtitle = document.getElementById('subtitle');
-
-  function prepareLine(line) {
-    const len = line.getTotalLength ? line.getTotalLength() : 200;
-    line.style.strokeDasharray = len;
-    line.style.strokeDashoffset = len;
-    line.style.transition = 'stroke-dashoffset 0.6s ease-out, opacity 0.4s ease-out';
-    line.style.opacity = '0';
-  }
-
-  prepareLine(lineL);
-  prepareLine(lineR);
-
-  setTimeout(() => {
-    lineL.style.opacity = '1';
-    lineL.style.strokeDashoffset = '0';
-    lineR.style.opacity = '1';
-    lineR.style.strokeDashoffset = '0';
-  }, 150);
-
-  setTimeout(() => {
-    starGroup.style.transition = 'transform 450ms cubic-bezier(.2,.9,.3,1)';
-    starGroup.style.transform = 'translate(260px,30px) scale(1)';
-  }, 800);
-
-  setTimeout(() => { titleStroke.style.transition = 'opacity 300ms ease-out'; titleStroke.style.opacity = '1'; }, 1300);
-  setTimeout(() => { titleFill.style.transition = 'opacity 300ms ease-out'; titleFill.style.opacity = '1'; }, 1600);
-  setTimeout(() => { subtitle.style.transition = 'opacity 400ms ease-out'; subtitle.style.opacity = '1'; }, 1800);
-
-  setTimeout(() => { window.location.href = 'home.html'; }, 3000);
-})();
+setTimeout(() => {
+    window.location.href = "amazeheads.html";
+}, 3000);
 </script>
+</head>
+<body>
+
+<div class="intro-container">
+    <div class="star">★</div>
+    <div class="line"></div>
+
+    <h1 class="title">AmazeHeads</h1>
+    <p class="subtitle">INSPIRING YOUNG MINDS</p>
+
+    <div class="line"></div>
+</div>
+
 </body>
 </html>
