@@ -1,29 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Gallery</title>
+    <style>
+        #gallery img {
+            width: 160px;
+            margin: 10px;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Uploaded Images</h2>
+<div id="gallery">Loading...</div>
+
+<script>
 // PUBLIC GALLERY JS
 const API = "https://amazeheads-api.roboticsclub1610.workers.dev";
 
 async function loadGallery() {
-  try {
-    const res = await fetch(`${API}/api/list`);
-    const files = await res.json();
+    try {
+        const res = await fetch(`${API}/api/list`);
+        const files = await res.json();
 
-    const gallery = document.getElementById("gallery");
-    gallery.innerHTML = "";
+        const gallery = document.getElementById("gallery");
+        gallery.innerHTML = "";
 
-    files.forEach(f => {
-      const url = `${API.replace("/api", "")}/${f.filename}`;
+        files.forEach(f => {
+            const url = `${API.replace("/api", "")}/${f.filename}`;
+            gallery.innerHTML += `
+                <div>
+                    <img src="${url}" alt="${f.filename}">
+                    <p>${f.filename}</p>
+                </div>
+            `;
+        });
 
-      gallery.innerHTML += `
-        <div class="card">
-          <img src="${url}" loading="lazy">
-          <div class="info">${f.filename}</div>
-        </div>`;
-    });
-
-  } catch (err) {
-    console.error(err);
-    document.getElementById("gallery").innerHTML =
-      "<p>Unable to load images</p>";
-  }
+    } catch (err) {
+        console.error(err);
+        document.getElementById("gallery").innerHTML = `
+            Unable to load images
+        `;
+    }
 }
 
 document.addEventListener("DOMContentLoaded", loadGallery);
+</script>
+
+</body>
+</html>
