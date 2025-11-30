@@ -1,29 +1,30 @@
-// PUBLIC GALLERY JS
-const API = "https://amazeheads-api.roboticsclub1610.workers.dev";
-
-async function loadGallery() {
+// app.js - public gallery
+(async function () {
+  const gallery = document.getElementById("gallery");
+  gallery.innerHTML = "Loading...";
   try {
-    const res = await fetch(`${API}/api/list`);
+    const res = await fetch(`${API_BASE}/api/list?prefix=${encodeURIComponent(DEFAULT_FOLDER)}`);
+    if (!res.ok) throw new Error("List failed");
     const files = await res.json();
-
-    const gallery = document.getElementById("gallery");
+    if (!files.length) {
+      gallery.innerHTML = "<p class='muted'>No files yet.</p>";
+      return;
+    }
     gallery.innerHTML = "";
-
     files.forEach(f => {
-      const url = `${API.replace("/api", "")}/${f.filename}`;
-
-      gallery.innerHTML += `
-        <div class="card">
-          <img src="${url}" loading="lazy">
-          <div class="info">${f.filename}</div>
-        </div>`;
+      const url = `${PUBLIC_R2_BASE}/${encodeURIComponent("uploads/" + f.filename)}`;
+      const ext = f.filename.split(".").pop().toLowerCase();
+      const card = document.createElement("div");
+      card.className = "card";
+      if (["mp4","webm","ogg"].includes(ext)) {
+        card.innerHTML = `<video controls src="${url}" preload="none"></video><div class="fname">${f.filename}</div>`;
+      } else {
+        card.innerHTML = `<img loading="lazy" src="${url}" alt="${f.filename}"><div class="fname">${f.filename}</div>`;
+      }
+      gallery.appendChild(card);
     });
-
-  } catch (err) {
-    console.error(err);
-    document.getElementById("gallery").innerHTML =
-      "<p>Unable to load images</p>";
+  } catch (e) {
+    console.error(e);
+    gallery.innerHTML = "<p class='muted'>Unable to load gallery.</p>";
   }
-}
-
-document.addEventListener("DOMContentLoaded", loadGallery);
+})();
